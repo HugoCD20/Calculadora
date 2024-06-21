@@ -15,21 +15,26 @@ session_start();
     <style>
     header{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
-        background-color:gray;
-        margin-bottom:20px;
-        color:white;
+        height: 117px;
+        background-color: #504e4e;
+        margin-bottom: 20px;
+        color: white;
+        align-items: center;
     }
     .numero1,.numero2{
         width: 70px;
+        border-style: unset;
     }
     select{
         margin-left: 20px;
+        width: 54px;
         margin-right: 20px;
     }
     .igual{
         margin-left: 10px;
+        min-width: 46px;
     }
     label, h2, h3 {
         display: flex;
@@ -45,7 +50,7 @@ session_start();
         font-family: Arial, sans-serif;
         background-color: #f0f0f0;
         margin: 0;
-        padding: 20px;
+        padding: 0px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -201,7 +206,7 @@ session_start();
                 }
                 ?>
         <label for="cinta" class="cinta">
-            Cinta<input type="text" name="cinta" class="igual" value="<?php//esta es la cinta
+        Cinta estado actual:<?php if(isset($maquina)){echo "<strong>q".$maquina."<strong>";}?><input type="text" name="cinta" class="igual" value="<?php
                 if (isset($valor)) {
                     echo $valor;
                 }
