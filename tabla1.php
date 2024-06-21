@@ -1,5 +1,5 @@
 
-<table>
+<table><!--aqui es donde se crea la tabla de multiplicar, funciones de transicion-->
         <thead>
             <tr>
                 <th>Estados</th>

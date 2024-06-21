@@ -85,7 +85,7 @@ session_start();
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0f0f0; /* Opcional: para visualizar el contenedor */
+            background-color: #f0f0f0; 
             padding: 10px;
         }
         .contenedor2 img {
@@ -103,7 +103,7 @@ session_start();
     </header>
     <main>
         <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="GET">
-            <label for="numero1">            
+            <label for="numero1">   <!--menú de insertciones de datos-->         
                 <input type="text" name="numero1" id="numero1" class="numero1">
                 <select name="operacion" id="operacion">
                     <option value="X">X</option>
@@ -116,19 +116,19 @@ session_start();
             </label>
     </form>
     <?php 
-        if ($_SERVER["REQUEST_METHOD"] === "GET") {
-            if (!empty($_GET["numero1"])){
+        if ($_SERVER["REQUEST_METHOD"] === "GET") {//este if verifica que se enviara una solicitud GET
+            if (!empty($_GET["numero1"])){//este verifica que los datos no esten vacios
                 $numero1=$_GET["numero1"];
                 $_SESSION["imprime"]=null;
                 $operacion=$_GET["operacion"];
                 $numero2=$_GET["numero2"];
                 $_SESSION["operacion"]=$numero1 ." ".$operacion. " ".$numero2;
                 $_SESSION["tabla"]=$operacion;
-                $numero1 = str_repeat("0", $numero1); 
+                $numero1 = str_repeat("0", $numero1); //esta funcion sirve para que el numero decimal ingresado se represente con 0
                 $numero2 = str_repeat("0", $numero2); 
-                $cadena=$numero1 . "1". $numero2."1";
-                if($operacion=="X"){                    
-                    include("Multiplicacion.php");
+                $cadena=$numero1 . "1". $numero2."1";//y se unen en una sola cadena
+                if($operacion=="X"){//estas condicionales verifican que operacion se realizará              
+                    include("Multiplicacion.php");//esta funcion incluye el documento Multiplicacion.php
                 }elseif($operacion=="+"){
                     include("Suma.php");
                 }elseif($operacion=="-"){
@@ -139,31 +139,31 @@ session_start();
                 
             }            
         }
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            if(isset($_POST["boton"]) && $_POST["boton"]=="Siguiente"){
-                if (isset($_SESSION["resultado"]) && !empty($_SESSION["resultado"])) {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {//este if verifica que se enviara una solicitud POST
+            if(isset($_POST["boton"]) && $_POST["boton"]=="Siguiente"){//esta if verifica que boton se presiona
+                if (isset($_SESSION["resultado"]) && !empty($_SESSION["resultado"])) {//este if verifica que los resultados no estén vacios
                     $resultado = $_SESSION["resultado"];
-                    if(isset($resultado[0][2][0])){
+                    if(isset($resultado[0][2][0])){//ese de aqui le da valor a la variable $maquina que es con la que se hace la animacion
                         $maquina=(string)$resultado[0][2][0];
                     }
-                    $cinta = $resultado[0][1];
+                    $cinta = $resultado[0][1];//este es el valor de la cinta
                     $valor1="";
                     $valor="";
-                    for($i = 0; $i < count($cinta); $i++) {
-                        if($resultado[0][0]==$i){
+                    for($i = 0; $i < count($cinta); $i++) {//de este lado se forma la cadena que se muestra en el input
+                        if($resultado[0][0]==$i){//este inserta la q donde debe de ir
                             $valor .= "q".$cinta[$i];
                         }else{
                             $valor .= $cinta[$i];
                         }
                     }
                     $final=TRUE;
-                    for($i = 0; $i < strlen($valor); $i++) {
+                    for($i = 0; $i < strlen($valor); $i++) {//ese de es en el caso de que la q deba de estar al final o al principio de la cinta
                         if($valor[$i]=="q"){
                             $final=FALSE;
                         }
                     }
                     if($final){
-                        if ($resultado[0][0]<0){
+                        if ($resultado[0][0]<0){//esta de aqui ya actualiza la cadena en el caso de que la q vaya al final o al principio de la cinta
                             $valor ="qB".$valor;
                         }else{
                             $valor .="qB";
@@ -173,35 +173,35 @@ session_start();
                     $resultado = array_values($resultado); // Reindexar el arreglo
                     $_SESSION["resultado"] = $resultado;
                 }
-            }else{
-                if(isset($_POST["cinta"])){
+            }else{//este codigo se ejecuta cuando se da al boton finalizar
+                if(isset($_POST["cinta"])){//verifica que haya un valor
                     $terminado=$_POST["cinta"];
                     $R_final="";
                     for($i = 0; $i < strlen($terminado); $i++) {
-                        if($terminado[$i]!="B" && $terminado[$i]!="q" && $terminado[$i]!="Y"){
+                        if($terminado[$i]!="B" && $terminado[$i]!="q" && $terminado[$i]!="Y"){//quita los auxiliares que se utilizaron en la cinta
                             $R_final .=$terminado[$i];
                         }
                     }
-                    if($R_final==""){
+                    if($R_final==""){//pone un valor al resultado en caso que no tenga uno se asigna sero
                         $_SESSION["imprime"]="0";
                     }else{
-                        $_SESSION["imprime"]=strlen($R_final);
+                        $_SESSION["imprime"]=strlen($R_final);//en este caso es la cantidad de ceros que quedaron en la cadena
                     }
                 }
             }
         }
     ?>
-     <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+     <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST"><!--este formulario es para mover la cinta-->
             <?php
                 if (!empty($_SESSION["resultado"])) {
-                    echo "<h2>Presiona siguiente para continuar</h2>";
+                    echo "<h2>Presiona siguiente para continuar</h2>";//imprime una instruccion
                 }
                 if(isset($_SESSION["operacion"])){
-                    echo "<h3>Operacion: {$_SESSION['operacion']}</h3>";
+                    echo "<h3>Operacion: {$_SESSION['operacion']}</h3>";//imprime la operacion que se va a realizar
                 }
                 ?>
         <label for="cinta" class="cinta">
-            Cinta<input type="text" name="cinta" class="igual" value="<?php
+            Cinta<input type="text" name="cinta" class="igual" value="<?php//esta es la cinta
                 if (isset($valor)) {
                     echo $valor;
                 }
@@ -213,12 +213,12 @@ session_start();
     <?php
         if (isset( $_SESSION["imprime"])){
             $imprime=$_SESSION["imprime"];
-            echo "<h3>Resultado: {$imprime}</h3>";
+            echo "<h3>Resultado: {$imprime}</h3>";//aqui es donde se imprime el resultado
         }
     ?>
     <div class="contenedor">
     <?php
-        if(isset($valor)){
+        if(isset($valor)){//aqui se imprime la tabla segun la operacion
             if($_SESSION["tabla"]=="X"){
                 include("tabla1.php");
             }elseif($_SESSION["tabla"]=="/"){
@@ -234,14 +234,14 @@ session_start();
     <div class="contenedor2">
         <?php   
             if(isset($valor)){
-                $indice=$_SESSION["tabla"];
+                $indice=$_SESSION["tabla"];//aqui se imprime la maquina de turing
                 if($indice=="/"){
                     $indice="1";
                 }
                 if(isset($maquina)){
                     echo '<img src="img' . $indice . '/q' . $maquina . '.png">';
                 }else{
-                    if($_SESSION["tabla"]=="X"){
+                    if($_SESSION["tabla"]=="X"){//esto solo es para poner el ultimo estado 
                         if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q12' . '.png">';
                     }elseif($_SESSION["tabla"]=="/"){
                         if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q10' . '.png">';
