@@ -12,7 +12,7 @@
         <tbody>
             <tr>
                 <td>q0</td>
-                <td>(q1,B,R)</td>
+                <td >(q1,B,R)</td>
                 <td></td>
                 <td></td>
                 <td></td>

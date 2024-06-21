@@ -13,10 +13,23 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>calculadora</title>
     <style>
-    header {
+    header{
         display: flex;
         flex-direction: row;
         justify-content: center;
+        background-color:gray;
+        margin-bottom:20px;
+        color:white;
+    }
+    .numero1,.numero2{
+        width: 70px;
+    }
+    select{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .igual{
+        margin-left: 10px;
     }
     label, h2, h3 {
         display: flex;
@@ -33,10 +46,14 @@ session_start();
         background-color: #f0f0f0;
         margin: 0;
         padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     table {
-        width: 50%;
+        width: 40%;
         border-collapse: collapse;
+        margin-left:10%;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         background-color: #fff;
     }
@@ -58,6 +75,7 @@ session_start();
     .contenedor {
         width: 100%;
         display: flex;
+        margin-top:20px;
         flex-direction: row;
         justify-content: flex-start; /* Alineación a la izquierda */
     }
@@ -72,7 +90,7 @@ session_start();
         }
         .contenedor2 img {
             max-width: 100%;
-            max-height: 500px;
+            max-height: 400px;
             height: auto;
             display: block;
         }
@@ -86,15 +104,15 @@ session_start();
     <main>
         <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="GET">
             <label for="numero1">            
-                <input type="text" name="numero1" id="numero1">
+                <input type="text" name="numero1" id="numero1" class="numero1">
                 <select name="operacion" id="operacion">
                     <option value="X">X</option>
                     <option value="/">/</option>
                     <option value="+">+</option>
                     <option value="-">-</option>
                 </select>
-                <input type="text" name="numero2" id="numero2">
-                <input type="submit" value="=">
+                <input type="text" name="numero2" id="numero2" class="numero2">
+                <input type="submit" value="=" class="igual">
             </label>
     </form>
     <?php 
@@ -160,7 +178,7 @@ session_start();
                     $terminado=$_POST["cinta"];
                     $R_final="";
                     for($i = 0; $i < strlen($terminado); $i++) {
-                        if($terminado[$i]!="B" && $terminado[$i]!="q"){
+                        if($terminado[$i]!="B" && $terminado[$i]!="q" && $terminado[$i]!="Y"){
                             $R_final .=$terminado[$i];
                         }
                     }
@@ -182,14 +200,14 @@ session_start();
                     echo "<h3>Operacion: {$_SESSION['operacion']}</h3>";
                 }
                 ?>
-        <label for="cinta">
-            Cinta<input type="text" name="cinta" value="<?php
+        <label for="cinta" class="cinta">
+            Cinta<input type="text" name="cinta" class="igual" value="<?php
                 if (isset($valor)) {
                     echo $valor;
                 }
             ?>">
-            <input type="submit" name="boton" value="Siguiente" <?php if (empty($_SESSION["resultado"])) echo 'disabled'; ?>>
-            <input type="submit" name="boton" value="Finalizar" <?php if (!empty($_SESSION["resultado"])) echo 'disabled'; ?>>
+            <input type="submit" class="igual" name="boton" value="Siguiente" <?php if (empty($_SESSION["resultado"])) echo 'disabled'; ?>>
+            <input type="submit" class="igual" name="boton" value="Finalizar" <?php if (!empty($_SESSION["resultado"])) echo 'disabled'; ?>>
         </label>
     </form>
     <?php
@@ -238,6 +256,5 @@ session_start();
     </div>
     
     </main>
-    <footer></footer>
 </body>
 </html>
