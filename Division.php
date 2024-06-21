@@ -38,6 +38,7 @@
         }else{
             $bandera=FALSE;
         }
+        $resultado[]=[$estado_control,$cinta,$coincidencia];
         if($coincidencia){
            if($estado_control>=0){
                 if($estado_control>count($cinta)){
@@ -55,7 +56,7 @@
             $bandera=FALSE;
         }
     }
-    echo json_encode($cinta);
+    $_SESSION["resultado"]=$resultado;
 
 
 ?>

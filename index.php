@@ -1,3 +1,11 @@
+<?php
+header('Cache-Control: no-cache');
+header('Content-Encoding: none');
+ob_implicit_flush(true);
+ob_end_flush();
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +18,14 @@
             flex-direction: row;
             justify-content: center;
         }
-        label{
+        label,h2,h3{
             display: flex;
             flex-direction: row;
+            justify-content: center;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
             justify-content: center;
         }
     </style>
@@ -34,13 +47,14 @@
                 <input type="text" name="numero2" id="numero2">
                 <input type="submit" value="=">
             </label>
-    </form>
+    </form><br><br><br>
     <?php 
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             if (!empty($_GET["numero1"])){
                 $numero1=$_GET["numero1"];
                 $operacion=$_GET["operacion"];
                 $numero2=$_GET["numero2"];
+                $_SESSION["operacion"]=$numero1 ." ".$operacion. " ".$numero2;
                 $numero1 = str_repeat("0", $numero1); 
                 $numero2 = str_repeat("0", $numero2); 
                 $cadena=$numero1 . "1". $numero2."1";
@@ -55,6 +69,79 @@
                 }
                 
             }            
+        }
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if(isset($_POST["boton"]) && $_POST["boton"]=="Siguiente"){
+                if (isset($_SESSION["resultado"]) && !empty($_SESSION["resultado"])) {
+                    $resultado = $_SESSION["resultado"];
+                    $cinta = $resultado[0][1];
+                    $valor1="";
+                    $valor="";
+                    for($i = 0; $i < count($cinta); $i++) {
+                        if($resultado[0][0]==$i){
+                            $valor .= "q".$cinta[$i];
+                        }else{
+                            $valor .= $cinta[$i];
+                        }
+                    }
+                    $final=TRUE;
+                    for($i = 0; $i < strlen($valor); $i++) {
+                        if($valor[$i]=="q"){
+                            $final=FALSE;
+                        }
+                    }
+                    if($final){
+                        if ($resultado[0][0]<0){
+                            $valor ="qB".$valor;
+                        }else{
+                            $valor .="qB";
+                        }
+                    }
+                    unset($resultado[0]);
+                    $resultado = array_values($resultado); // Reindexar el arreglo
+                    $_SESSION["resultado"] = $resultado;
+                }
+            }else{
+                if(isset($_POST["cinta"])){
+                    $terminado=$_POST["cinta"];
+                    $R_final="";
+                    for($i = 0; $i < strlen($terminado); $i++) {
+                        if($terminado[$i]!="B" && $terminado[$i]!="q"){
+                            $R_final .=$terminado[$i];
+                        }
+                    }
+                    if($R_final==""){
+                        $_SESSION["imprime"]="0";
+                    }else{
+                        $_SESSION["imprime"]=strlen($R_final);
+                    }
+                }
+            }
+        }
+    ?>
+     <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+            <?php
+                if (!empty($_SESSION["resultado"])) {
+                    echo "<h2>Presiona siguiente para continuar</h2>";
+                }
+                if(isset($_SESSION["operacion"])){
+                    echo "<h3>Operacion: {$_SESSION['operacion']}</h3>";
+                }
+                ?>
+        <label for="cinta">cinta
+            <input type="text" name="cinta" value="<?php
+                if (isset($valor)) {
+                    echo $valor;
+                }
+            ?>">
+            <input type="submit" name="boton" value="Siguiente" <?php if (empty($_SESSION["resultado"])) echo 'disabled'; ?>>
+            <input type="submit" name="boton" value="Finalizar" <?php if (!empty($_SESSION["resultado"])) echo 'disabled'; ?>>
+        </label>
+    </form>
+    <?php
+        if (isset( $_SESSION["imprime"])){
+            $imprime=$_SESSION["imprime"];
+            echo "<h3>Resultado: {$imprime}</h3>";
         }
     ?>
     </main>
