@@ -1,3 +1,4 @@
+
 <table>
         <thead>
             <tr>
@@ -18,20 +19,80 @@
             </tr>
             <tr>
                 <td>q1</td>
-                <td>(q1,B,R)</td>
+                <td>(q1,0,R)</td>
+                <td>(q2,1,R)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>q2</td>
+                <td>(q3,X,R)</td>
+                <td>(q5,1,L)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>q3</td>
+                <td>(q3,0,R)</td>
+                <td>(q3,1,R)</td>
+                <td>(q4,0,L)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>q4</td>
+                <td>(q4,0,L)</td>
+                <td>(q4,1,L)</td>
+                <td>(q2,X,R)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>q5</td>
+                <td>(q5,0,L)</td>
+                <td>(q6,1,R)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>q6</td>
+                <td>(q7,0,L)</td>
                 <td></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
-                <td>John Smith</td>
-                <td>35</td>
-                <td>Estados Unidos</td>
+                <td>q7</td>
+                <td></td>
+                <td>(q8,1,L)</td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
-                <td>Lisa Müller</td>
-                <td>28</td>
-                <td>Alemania</td>
+                <td>q8</td>
+                <td>(q9,0,L)</td>
+                <td></td>
+                <td></td>
+                <td>(q10,B,R)</td>
+            </tr>
+            <tr>
+                <td>q9</td>
+                <td>(q9,0,L)</td>
+                <td></td>
+                <td></td>
+                <td>(q0,B,R)</td>
+            </tr>
+            <tr>
+                <td>q10</td>
+                <td></td>
+                <td>(q11,B,R)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>q11</td>
+                <td>(q11,B,R)</td>
+                <td>(q12,B,R)</td>
+                <td></td>
+                <td></td>
             </tr>
         </tbody>
     </table>
