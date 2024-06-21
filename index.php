@@ -61,6 +61,21 @@ session_start();
         flex-direction: row;
         justify-content: flex-start; /* Alineación a la izquierda */
     }
+    .contenedor2 {
+            width: 50%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0; /* Opcional: para visualizar el contenedor */
+            padding: 10px;
+        }
+        .contenedor2 img {
+            max-width: 100%;
+            max-height: 500px;
+            height: auto;
+            display: block;
+        }
 </style>
 
 </head>
@@ -86,6 +101,7 @@ session_start();
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             if (!empty($_GET["numero1"])){
                 $numero1=$_GET["numero1"];
+                $_SESSION["imprime"]=null;
                 $operacion=$_GET["operacion"];
                 $numero2=$_GET["numero2"];
                 $_SESSION["operacion"]=$numero1 ." ".$operacion. " ".$numero2;
@@ -109,6 +125,9 @@ session_start();
             if(isset($_POST["boton"]) && $_POST["boton"]=="Siguiente"){
                 if (isset($_SESSION["resultado"]) && !empty($_SESSION["resultado"])) {
                     $resultado = $_SESSION["resultado"];
+                    if(isset($resultado[0][2][0])){
+                        $maquina=(string)$resultado[0][2][0];
+                    }
                     $cinta = $resultado[0][1];
                     $valor1="";
                     $valor="";
@@ -194,6 +213,29 @@ session_start();
             
         }        
     ?>
+    <div class="contenedor2">
+        <?php   
+            if(isset($valor)){
+                $indice=$_SESSION["tabla"];
+                if($indice=="/"){
+                    $indice="1";
+                }
+                if(isset($maquina)){
+                    echo '<img src="img' . $indice . '/q' . $maquina . '.png">';
+                }else{
+                    if($_SESSION["tabla"]=="X"){
+                        if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q12' . '.png">';
+                    }elseif($_SESSION["tabla"]=="/"){
+                        if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q10' . '.png">';
+                    }elseif($_SESSION["tabla"]=="+"){
+                        if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q6' . '.png">';
+                    }elseif($_SESSION["tabla"]=="-"){
+                        if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q5' . '.png">';
+                    }
+                }
+            }
+        ?>
+    </div>
     
     </main>
     <footer></footer>
