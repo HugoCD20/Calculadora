@@ -115,6 +115,7 @@ session_start();
                     <option value="/">/</option>
                     <option value="+">+</option>
                     <option value="-">-</option>
+                    <option value="^">^</option>
                 </select>
                 <input type="text" name="numero2" id="numero2" class="numero2">
                 <input type="submit" value="=" class="igual">
@@ -131,7 +132,12 @@ session_start();
                 $_SESSION["tabla"]=$operacion;
                 $numero1 = str_repeat("0", $numero1); //esta funcion sirve para que el numero decimal ingresado se represente con 0
                 $numero2 = str_repeat("0", $numero2); 
-                $cadena=$numero1 . "1". $numero2."1";//y se unen en una sola cadena
+                $cadena="";
+                if($operacion!="^"){
+                    $cadena=$numero1 . "1". $numero2."1";//y se unen en una sola cadena
+                }else{
+                    $cadena=$numero1 . "1". $numero1 ."1". $numero2."1";
+                }
                 if($operacion=="X"){//estas condicionales verifican que operacion se realizará              
                     include("Multiplicacion.php");//esta funcion incluye el documento Multiplicacion.php
                 }elseif($operacion=="+"){
@@ -140,6 +146,8 @@ session_start();
                     include("Resta.php");
                 }elseif($operacion=="/"){
                     include("Division.php");
+                }elseif($operacion=="^"){
+                    include("potencia.php");
                 }
                 
             }            
