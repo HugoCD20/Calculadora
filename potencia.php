@@ -57,17 +57,17 @@
         if($coincidencia){//verifica si coincidio una funcion de trancision
            if($estado_control>=0){//verifica que el estado de conrol sea mayor a 0
                 if($estado_control>count($cinta)){//veifica que el estado de control sea mauor a el tamaño de la cinta
-                    if($coincidencia[1]!="B" && $coincidencia[0]!=13){
+                    if($coincidencia[1]!="B" && $coincidencia[0]!=17){
                         $cinta[]=$coincidencia[2];//agrega un valor en lugar del espacio vacio
                     }
                 }else{
-                    if($coincidencia[1]!="B" && $coincidencia[0]!=13){
-                        $cinta[$estado_control]=$coincidencia[2];//hace lo mismo pero en un lugar en especifico
-
-                    }
+                    $cinta[$estado_control]=$coincidencia[2];//hace lo mismo pero en un lugar en especifico
+                    
                 }
            }else{
-               array_unshift($cinta,$coincidencia[2]);
+                if($coincidencia[2]!="B"){
+                    array_unshift($cinta,$coincidencia[2]);
+                }
            }
            $estado=$coincidencia[4];//actualiza al estado al que se mueve
            if($coincidencia[3]=="L"){//realiza el movimiento ya sea a la derecha o izquierda

@@ -129,6 +129,7 @@ session_start();
                 $operacion=$_GET["operacion"];
                 $numero2=$_GET["numero2"];
                 $_SESSION["operacion"]=$numero1 ." ".$operacion. " ".$numero2;
+                $numero2=$numero2 -1;
                 $_SESSION["tabla"]=$operacion;
                 $numero1 = str_repeat("0", $numero1); //esta funcion sirve para que el numero decimal ingresado se represente con 0
                 $numero2 = str_repeat("0", $numero2); 
