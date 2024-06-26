@@ -241,6 +241,8 @@ session_start();
                 include("tabla3.php");
             }elseif($_SESSION["tabla"]=="-"){
                 include("tabla4.php");
+            }elseif($_SESSION["tabla"]=="^"){
+                include("tabla5.php");
             }
             
         }        
