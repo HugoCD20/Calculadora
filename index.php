@@ -134,21 +134,31 @@ session_start();
                 $numero1 = str_repeat("0", $numero1); //esta funcion sirve para que el numero decimal ingresado se represente con 0
                 $numero2 = str_repeat("0", $numero2); 
                 $cadena="";
+                $continua=TRUE;
                 if($operacion!="^"){
                     $cadena=$numero1 . "1". $numero2."1";//y se unen en una sola cadena
                 }else{
-                    $cadena=$numero1 . "1". $numero1 ."1". $numero2."1";
+                    if($numero2==null){
+                        $continua=FALSE;
+                    }else{
+                        $cadena=$numero1 . "1". $numero1 ."1". $numero2."1";
+                    }
                 }
-                if($operacion=="X"){//estas condicionales verifican que operacion se realizará              
-                    include("Multiplicacion.php");//esta funcion incluye el documento Multiplicacion.php
-                }elseif($operacion=="+"){
-                    include("Suma.php");
-                }elseif($operacion=="-"){
-                    include("Resta.php");
-                }elseif($operacion=="/"){
-                    include("Division.php");
-                }elseif($operacion=="^"){
-                    include("potencia.php");
+                $_SESSION["continua"] = $continua;
+                if($continua){
+                    if($operacion=="X"){//estas condicionales verifican que operacion se realizará              
+                        include("Multiplicacion.php");//esta funcion incluye el documento Multiplicacion.php
+                    }elseif($operacion=="+"){
+                        include("Suma.php");
+                    }elseif($operacion=="-"){
+                        include("Resta.php");
+                    }elseif($operacion=="/"){
+                        include("Division.php");
+                    }elseif($operacion=="^"){
+                        include("potencia.php");
+                    }
+                }else{
+                    $_SESSION["imprime"]=strlen($numero1);
                 }
                 
             }            
@@ -183,6 +193,12 @@ session_start();
                             $valor .="qB";
                         }
                     }
+                    if(!empty($resultado[0][2])){
+                        $_SESSION["seleccion"]=$resultado[0][2];
+                    }else{
+                        $_SESSION["seleccion"]=[24,"acabado"];
+                    }
+                    print_r($_SESSION["tabla"]);
                     unset($resultado[0]);
                     $resultado = array_values($resultado); // Reindexar el arreglo
                     $_SESSION["resultado"] = $resultado;
@@ -208,10 +224,10 @@ session_start();
      <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST"><!--este formulario es para mover la cinta-->
             <?php
                 if (!empty($_SESSION["resultado"])) {
-                    echo "<h2>Presiona siguiente para continuar</h2>";//imprime una instruccion
+                    echo "<h2>Presiona siguiente para continuar</h2>";//imprime una instrucción
                 }
                 if(isset($_SESSION["operacion"])){
-                    echo "<h3>Operacion: {$_SESSION['operacion']}</h3>";//imprime la operacion que se va a realizar
+                    echo "<h3>Operacion: {$_SESSION['operacion']}</h3>";//imprime la operación que se va a realizar
                 }
                 ?>
         <label for="cinta" class="cinta">
@@ -220,19 +236,19 @@ session_start();
                     echo $valor;
                 }
             ?>">
-            <input type="submit" class="igual" name="boton" value="Siguiente" <?php if (empty($_SESSION["resultado"])) echo 'disabled'; ?>>
-            <input type="submit" class="igual" name="boton" value="Finalizar" <?php if (!empty($_SESSION["resultado"])) echo 'disabled'; ?>>
+            <input type="submit" class="igual" name="boton" value="Siguiente" <?php if (empty($_SESSION["resultado"]) || !$_SESSION["continua"]) {echo 'disabled'; }?>>
+            <input type="submit" class="igual" name="boton" value="Finalizar" <?php if (!empty($_SESSION["resultado"]) || !$_SESSION["continua"]){ echo 'disabled';} ?>>
         </label>
     </form>
     <?php
         if (isset( $_SESSION["imprime"])){
             $imprime=$_SESSION["imprime"];
-            echo "<h3>Resultado: {$imprime}</h3>";//aqui es donde se imprime el resultado
+            echo "<h3>Resultado: {$imprime}</h3>";//aquí es donde se imprime el resultado
         }
     ?>
     <div class="contenedor">
     <?php
-        if(isset($valor)){//aqui se imprime la tabla segun la operacion
+        if(isset($valor)){//aquí se imprime la tabla según la operación
             if($_SESSION["tabla"]=="X"){
                 include("tabla1.php");
             }elseif($_SESSION["tabla"]=="/"){
@@ -250,14 +266,14 @@ session_start();
     <div class="contenedor2">
         <?php   
             if(isset($valor)){
-                $indice=$_SESSION["tabla"];//aqui se imprime la maquina de turing
+                $indice=$_SESSION["tabla"];//aquí se imprime la máquina de Turing
                 if($indice=="/"){
                     $indice="1";
                 }
                 if(isset($maquina)){
                     echo '<img src="img' . $indice . '/q' . $maquina . '.png">';
                 }else{
-                    if($_SESSION["tabla"]=="X"){//esto solo es para poner el ultimo estado 
+                    if($_SESSION["tabla"]=="X"){//esto solo es para poner el último estado 
                         if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q12' . '.png">';
                     }elseif($_SESSION["tabla"]=="/"){
                         if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q10' . '.png">';
