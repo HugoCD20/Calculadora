@@ -253,7 +253,7 @@ session_start();
                 }
                 ?>
         <label for="cinta" class="cinta">
-        Cinta estado actual:<?php if(isset($maquina)){echo "<strong>q".$maquina."</strong>";}?><input type="text" name="cinta" class="cinta-2" readonly value="<?php
+        Cinta-> estado actual:<?php if(isset($maquina)){echo "<strong>q".$maquina."</strong>";}?><input type="text" name="cinta" class="cinta-2" readonly value="<?php
                 if (isset($valor)) {
                     echo $valor;
                 }
