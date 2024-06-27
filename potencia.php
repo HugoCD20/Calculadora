@@ -2,7 +2,7 @@
     $Funciones=[
         [[0,"0","B","R",1]],
         [[1,"0","0","R",1],[1,"1","1","R",2]],
-        [[2,"0","X","R",3],[2,"1","1","L",5]],
+        [[2,"0","X","R",3],[2,"1","1","L",5]],//funciones de transicion de la potencia
         [[3,"0","0","R",3],[3,"1","1","R",3],[3,"X","X","R",3],[3,"B","0","L",4]],
         [[4,"0","0","L",4],[4,"1","1","L",22]],
         [[5,"1","1","R",6],[5,"X","0","L",5]],
@@ -65,8 +65,8 @@
                     
                 }
            }else{
-                if($coincidencia[2]!="B"){
-                    array_unshift($cinta,$coincidencia[2]);
+                if($coincidencia[2]!="B"){//esta parte evita que la cinta remplace un espacio en blanco cuando no es necesario
+                    array_unshift($cinta,$coincidencia[2]);//esta funcion agrega un valor al inicio del arreglo y recorre los demás
                 }
            }
            $estado=$coincidencia[4];//actualiza al estado al que se mueve

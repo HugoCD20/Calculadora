@@ -145,24 +145,24 @@ session_start();
                 $_SESSION["imprime"]=null;
                 $operacion=$_GET["operacion"];
                 $numero2=$_GET["numero2"];
-                $_SESSION["operacion"]=$numero1 ." ".$operacion. " ".$numero2;
-                if($operacion=="^"){$numero2=$numero2 -1;}
-                $_SESSION["tabla"]=$operacion;
+                $_SESSION["operacion"]=$numero1 ." ".$operacion. " ".$numero2;//esta parte almacena la operacion a realizar
+                if($operacion=="^"){$numero2=$numero2 -1;}//verifica si se realizara una potencia y se le resta uno al numero 2
+                $_SESSION["tabla"]=$operacion;//esta parate guarda que operador se utiliza
                 $numero1 = str_repeat("0", $numero1); //esta funcion sirve para que el numero decimal ingresado se represente con 0
                 $numero2 = str_repeat("0", $numero2); 
-                $cadena="";
-                $continua=TRUE;
-                if($operacion!="^"){
+                $cadena="";//se inicializa la cadena
+                $continua=TRUE;//se inicializa la variable continua
+                if($operacion!="^"){//verifica si no se realizará una potencia
                     $cadena=$numero1 . "1". $numero2."1";//y se unen en una sola cadena
                 }else{
-                    if($numero2==null){
-                        $continua=FALSE;
+                    if($numero2==null){//en caso de que sea una potencia se hace esta validacion para ver si se elevo a 1 pontencia
+                        $continua=FALSE;//se cambia el valor de la variable a falso
                     }else{
-                        $cadena=$numero1 . "1". $numero1 ."1". $numero2."1";
+                        $cadena=$numero1 . "1". $numero1 ."1". $numero2."1";//en caso contrario crea la cadena a evaluar
                     }
                 }
-                $_SESSION["continua"] = $continua;
-                if($continua){
+                $_SESSION["continua"] = $continua;//guarda el valor en una coockee
+                if($continua){//verifica si continiar es verdadero esto para evaluar si se hace una potencia elevalo a la uno
                     if($operacion=="X"){//estas condicionales verifican que operacion se realizará              
                         include("Multiplicacion.php");//esta funcion incluye el documento Multiplicacion.php
                     }elseif($operacion=="+"){
@@ -175,7 +175,7 @@ session_start();
                         include("potencia.php");
                     }
                 }else{
-                    $_SESSION["imprime"]=strlen($numero1);
+                    $_SESSION["imprime"]=strlen($numero1);//en caso de que se este haciendo una potencia ala uno se guarda el valor que se va a retornar
                 }
                 
             }            
@@ -252,18 +252,18 @@ session_start();
                     echo "<h3>Operacion: {$_SESSION['operacion']}</h3>";//imprime la operación que se va a realizar
                 }
                 ?>
-        <label for="cinta" class="cinta">
+        <label for="cinta" class="cinta"><!--se cambio el valor del input para que sea de solo lectura-->
         Cinta-> estado actual:<?php if(isset($maquina)){echo "<strong>q".$maquina."</strong>";}?><input type="text" name="cinta" class="cinta-2" readonly value="<?php
                 if (isset($valor)) {
                     echo $valor;
                 }
-            ?>">
+            ?>"><!--los botones se configuraron para que esten activos siempre y cuando el valor de continua es positivo y de que haya o no un resultado-->
             <input type="submit" class="igual" name="boton" value="Siguiente" <?php if (empty($_SESSION["resultado"]) || !$_SESSION["continua"]) {echo 'disabled'; }?>>
             <input type="submit" class="igual" name="boton" value="Finalizar" <?php if (!empty($_SESSION["resultado"]) || !$_SESSION["continua"]){ echo 'disabled';} ?>>
         </label>
     </form>
     <?php
-        if (isset( $_SESSION["imprime"])){
+        if (isset( $_SESSION["imprime"])){//verifica de que exista un valor para imprimir
             $imprime=$_SESSION["imprime"];
             echo "<h3>Resultado: {$imprime}</h3>";//aquí es donde se imprime el resultado
         }

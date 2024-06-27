@@ -10,10 +10,10 @@
     </thead>
     <tbody>
         <tr>
-            <td>q0</td>
+            <td>q0</td><!--ya se ha hecho la tabla dinamica ahora verica en que estado y que funcion de transicion se va a ocupar-->
             <td <?php if($_SESSION["seleccion"][0] == 0 && $_SESSION["seleccion"][1] == "0"){ echo 'style="background-color:red;"'; } ?>>(q1,B,R)</td>
-            <td></td>
-            <td></td>
+            <td></td><!--la primera comparacion verifica que el estado actualmete sea el mismo de la tabla-->
+            <td></td><!--la segunda comparacion se encarga de seleccionar cual transicion se esta usando de la tabla-->
             <td></td>
         </tr>
         <tr>
