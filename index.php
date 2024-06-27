@@ -32,9 +32,24 @@ session_start();
         width: 54px;
         margin-right: 20px;
     }
-    .igual{
+    .igual,.cinta-2{
         margin-left: 10px;
         min-width: 46px;
+    }
+    .cinta{
+        background-color: gray;
+        color: white;
+        width: 80%;
+        height: 57px;
+        align-items: center;
+    }
+    Strong{
+        color: #4d1818;
+    }
+    .cinta-2{
+        width: 50%;
+        height: 25px;
+        font-size: medium;
     }
     label, h2, h3 {
         display: flex;
@@ -45,7 +60,9 @@ session_start();
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
     }
+        
     body {
         font-family: Arial, sans-serif;
         background-color: #f0f0f0;
@@ -215,7 +232,12 @@ session_start();
                     if($R_final==""){//pone un valor al resultado en caso que no tenga uno se asigna sero
                         $_SESSION["imprime"]="0";
                     }else{
-                        $_SESSION["imprime"]=strlen($R_final);//en este caso es la cantidad de ceros que quedaron en la cadena
+                        if($R_final[0]=="Z"){
+                            $_SESSION["imprime"]=-strlen($R_final);
+                        }else{
+                            $_SESSION["imprime"]=strlen($R_final);
+                        }
+                        //en este caso es la cantidad de ceros que quedaron en la cadena
                     }
                 }
             }
@@ -231,7 +253,7 @@ session_start();
                 }
                 ?>
         <label for="cinta" class="cinta">
-        Cinta estado actual:<?php if(isset($maquina)){echo "<strong>q".$maquina."<strong>";}?><input type="text" name="cinta" class="igual" value="<?php
+        Cinta estado actual:<?php if(isset($maquina)){echo "<strong>q".$maquina."</strong>";}?><input type="text" name="cinta" class="cinta-2" readonly value="<?php
                 if (isset($valor)) {
                     echo $valor;
                 }
