@@ -95,7 +95,7 @@ session_start();
         }
         .contenedor2 img {
             max-width: 100%;
-            max-height: 400px;
+            max-height: 600px;
             height: auto;
             display: block;
         }
@@ -281,6 +281,8 @@ session_start();
                         if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q6' . '.png">';
                     }elseif($_SESSION["tabla"]=="-"){
                         if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q5' . '.png">';
+                    }elseif($_SESSION["tabla"]=="^"){
+                        if (empty($_SESSION["resultado"])) echo '<img src="img' . $indice . '/q24' . '.png">';
                     }
                 }
             }
