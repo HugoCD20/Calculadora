@@ -39,6 +39,7 @@ session_start();
     .cinta{
         background-color: gray;
         color: white;
+        margin-top:10px;
         width: 80%;
         height: 57px;
         align-items: center;
@@ -258,8 +259,8 @@ session_start();
                     echo $valor;
                 }
             ?>"><!--los botones se configuraron para que esten activos siempre y cuando el valor de continua es positivo y de que haya o no un resultado-->
-            <input type="submit" class="igual" name="boton" value="Siguiente" <?php if (empty($_SESSION["resultado"]) || !$_SESSION["continua"]) {echo 'disabled'; }?>>
-            <input type="submit" class="igual" name="boton" value="Finalizar" <?php if (!empty($_SESSION["resultado"]) || !$_SESSION["continua"]){ echo 'disabled';} ?>>
+            <input type="submit" class="igual" name="boton" value="Siguiente" <?php if (empty($_SESSION["resultado"]) || isset($_SESSION["continua"]) && !$_SESSION["continua"]) {echo 'disabled'; }?>>
+            <input type="submit" class="igual" name="boton" value="Finalizar" <?php if (!empty($_SESSION["resultado"]) || isset($_SESSION["continua"]) && !$_SESSION["continua"]){ echo 'disabled';} ?>>
         </label>
     </form>
     <?php
